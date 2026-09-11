@@ -4,46 +4,14 @@ import { motion } from 'framer-motion';
 
 const Segments = () => {
   const segments = [
-    {
-      icon: '🍔',
-      name: 'Restaurantes',
-      description: 'Aumente vendas e reduza custos operacionais',
-    },
-    {
-      icon: '☕',
-      name: 'Cafeteria',
-      description: 'Atenda mais clientes de forma rápida e eficiente',
-    },
-    {
-      icon: '🍕',
-      name: 'Pizzaria',
-      description: 'Gerencie pedidos de forma inteligente',
-    },
-    {
-      icon: '🍜',
-      name: 'Snack Bar',
-      description: 'Aumente a produtividade e reduz filas',
-    },
-    {
-      icon: '🍰',
-      name: 'Confeitaria',
-      description: 'Receba pedidos customizados e pré-pagos',
-    },
-    {
-      icon: '🧋',
-      name: 'Bebidas',
-      description: 'Cardápio digital sempre atualizado',
-    },
-    {
-      icon: '🥗',
-      name: 'Saudável',
-      description: 'Informe nutrientes e ingredientes facilmente',
-    },
-    {
-      icon: '🌮',
-      name: 'Comida Rápida',
-      description: 'Acelere o atendimento sem calotes',
-    },
+    { icon: '🍔', name: 'Restaurantes', description: 'Aumente vendas e reduza custos operacionais' },
+    { icon: '☕', name: 'Cafeteria', description: 'Atenda mais clientes de forma rápida e eficiente' },
+    { icon: '🍕', name: 'Pizzaria', description: 'Gerencie pedidos de forma inteligente' },
+    { icon: '🍜', name: 'Snack Bar', description: 'Aumente a produtividade e reduz filas' },
+    { icon: '🍰', name: 'Confeitaria', description: 'Receba pedidos customizados e pré-pagos' },
+    { icon: '🥃', name: 'Bebidas', description: 'Cardápio digital sempre atualizado' },
+    { icon: '🥗', name: 'Saudável', description: 'Informe nutrientes e ingredientes facilmente' },
+    { icon: '🌮', name: 'Comida Rápida', description: 'Acelere o atendimento sem calotes' },
   ];
 
   return (
@@ -56,9 +24,7 @@ const Segments = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Segmentos
-          </h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Segmentos</h2>
           <p className="text-gray-400 text-lg">Adaptamos para seu negócio</p>
         </motion.div>
 

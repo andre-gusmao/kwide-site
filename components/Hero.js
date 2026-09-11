@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Link from 'next/link';
 
 const Hero = () => {
   const containerVariants = {
@@ -68,12 +67,12 @@ const Hero = () => {
             </motion.div>
 
             <motion.div className="flex flex-col sm:flex-row gap-4" variants={itemVariants}>
-              <Link href="/para-empresas" className="btn-primary text-center">
+              <a href="/para-empresas" className="btn-primary text-center">
                 Sou Estabelecimento
-              </Link>
-              <Link href="/para-clientes" className="btn-secondary text-center">
+              </a>
+              <a href="/para-clientes" className="btn-secondary text-center">
                 Sou Cliente
-              </Link>
+              </a>
             </motion.div>
           </motion.div>
 
@@ -85,7 +84,6 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.3 }}
           >
             <div className="absolute inset-0 bg-gradient-to-b from-brand-teal to-transparent opacity-10 rounded-full blur-3xl"></div>
-            {/* Placeholder for CUYDE mascot */}
             <div className="w-full h-full bg-gradient-to-b from-brand-teal to-brand-navy rounded-full flex items-center justify-center text-center">
               <p className="text-white text-2xl font-bold">🎭 CUYDE</p>
             </div>

@@ -58,7 +58,6 @@ const Testimonials = () => {
           <h3 className="text-xl font-bold text-white">{testimonials[current].name}</h3>
           <p className="text-brand-teal">{testimonials[current].role}</p>
 
-          {/* Navigation */}
           <div className="flex justify-center gap-4 mt-8">
             {testimonials.map((_, index) => (
               <button
