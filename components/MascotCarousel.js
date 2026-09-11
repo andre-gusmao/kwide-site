@@ -48,6 +48,14 @@ const MascotCarousel = () => {
   const [isPaused, setIsPaused] = useState(false);
   const [touchStart, setTouchStart] = useState(null);
 
+  const handleFocus = () => setIsPaused(true);
+
+  const handleBlur = (event) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+      setIsPaused(false);
+    }
+  };
+
   const goToSlide = (index) => {
     setDirection(index > activeIndex ? 1 : -1);
     setActiveIndex(index);
@@ -99,8 +107,8 @@ const MascotCarousel = () => {
           transition={{ duration: 0.7 }}
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
-          onFocus={() => setIsPaused(true)}
-          onBlur={() => setIsPaused(false)}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           onTouchStart={(event) => setTouchStart(event.touches[0].clientX)}
           onTouchEnd={(event) => {
             if (touchStart === null) {
@@ -181,7 +189,7 @@ const MascotCarousel = () => {
                 >
                   →
                 </button>
-                <span className="text-sm text-slate-400">Auto-play a cada 4s · pausa ao passar o mouse</span>
+                <span className="text-sm text-slate-400">Auto-play a cada 4s · pausa no hover, foco e swipe no mobile</span>
               </div>
 
               <div className="flex items-center gap-3 pt-2">
