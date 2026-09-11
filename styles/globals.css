@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hero Section */
+.hero-gradient {
+  background: linear-gradient(135deg, #0B2341 0%, #1a3a52 100%);
+}
+
+.hero-parallax {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Section Spacing */
+.section-padding {
+  @apply py-16 md:py-24 lg:py-32;
+}
+
+/* Text Styles */
+.text-gradient {
+  background: linear-gradient(135deg, #00D1C1 0%, #0B2341 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Button Styles */
+.btn-primary {
+  @apply px-6 py-3 bg-brand-teal text-brand-navy font-bold rounded-lg hover:opacity-90 transition-all duration-300;
+}
+
+.btn-secondary {
+  @apply px-6 py-3 bg-transparent border-2 border-brand-teal text-brand-teal font-bold rounded-lg hover:bg-brand-teal hover:text-brand-navy transition-all duration-300;
+}
+
+.btn-white {
+  @apply px-6 py-3 bg-white text-brand-navy font-bold rounded-lg hover:opacity-90 transition-all duration-300;
+}
+
+/* Card Styles */
+.card-hover {
+  @apply transition-all duration-300 hover:shadow-lg hover:scale-105;
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
