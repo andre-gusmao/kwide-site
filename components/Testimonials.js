@@ -53,7 +53,7 @@ const Testimonials = () => {
         >
           <div className="text-6xl mb-4">{testimonials[current].avatar}</div>
           <p className="text-xl text-gray-300 italic mb-6 leading-relaxed">
-            "{testimonials[current].content}"
+            &ldquo;{testimonials[current].content}&rdquo;
           </p>
           <h3 className="text-xl font-bold text-white">{testimonials[current].name}</h3>
           <p className="text-brand-teal">{testimonials[current].role}</p>
