@@ -127,6 +127,7 @@ const MascotCarousel = () => {
 
             const distance = event.changedTouches[0].clientX - touchStart;
             if (Math.abs(distance) > SWIPE_THRESHOLD) {
+              setIsAutoPlayEnabled(false);
               changeSlide(distance < 0 ? 1 : -1);
             }
             setTouchStart(null);
@@ -218,6 +219,7 @@ const MascotCarousel = () => {
                     type="button"
                     aria-label={`Ir para ${mascot.name}`}
                     onClick={() => goToSlide(index)}
+                    aria-pressed={index === activeIndex}
                     className={`h-3 rounded-full transition-all duration-300 ${index === activeIndex ? 'w-10 bg-brand-teal' : 'w-3 bg-white/25 hover:bg-white/45'}`}
                   />
                 ))}

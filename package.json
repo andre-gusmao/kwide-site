@@ -24,10 +24,5 @@
   "devDependencies": {
     "eslint": "^8.54.0",
     "eslint-config-next": "^14.0.0"
-  },
-  "eslintConfig": {
-    "extends": [
-      "next/core-web-vitals"
-    ]
   }
 }
