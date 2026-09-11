@@ -46,6 +46,7 @@ const MascotCarousel = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(1);
   const [isPaused, setIsPaused] = useState(false);
+  const [isAutoPlayEnabled, setIsAutoPlayEnabled] = useState(true);
   const [touchStart, setTouchStart] = useState(null);
 
   const handleFocus = () => setIsPaused(true);
@@ -67,7 +68,7 @@ const MascotCarousel = () => {
   };
 
   useEffect(() => {
-    if (isPaused) {
+    if (isPaused || !isAutoPlayEnabled) {
       return undefined;
     }
 
@@ -77,7 +78,7 @@ const MascotCarousel = () => {
     }, AUTOPLAY_DELAY);
 
     return () => clearInterval(interval);
-  }, [isPaused]);
+  }, [isAutoPlayEnabled, isPaused]);
 
   const activeMascot = mascots[activeIndex];
 
@@ -110,6 +111,9 @@ const MascotCarousel = () => {
           onFocus={handleFocus}
           onBlur={handleBlur}
           onTouchStart={(event) => setTouchStart(event.touches[0].clientX)}
+          tabIndex={0}
+          role="region"
+          aria-label="Carousel interativo dos mascotes da KWide"
           onTouchEnd={(event) => {
             if (touchStart === null) {
               setTouchStart(null);
@@ -189,7 +193,15 @@ const MascotCarousel = () => {
                 >
                   →
                 </button>
-                <span className="text-sm text-slate-400">Auto-play a cada 4s · pausa no hover, foco e swipe no mobile</span>
+                <button
+                  type="button"
+                  onClick={() => setIsAutoPlayEnabled((current) => !current)}
+                  className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white transition hover:border-brand-teal hover:text-brand-teal"
+                  aria-label={isAutoPlayEnabled ? 'Pausar rotação automática' : 'Retomar rotação automática'}
+                >
+                  {isAutoPlayEnabled ? 'Pausar autoplay' : 'Retomar autoplay'}
+                </button>
+                <span className="text-sm text-slate-400">Auto-play a cada 4s · pause com botão, hover, foco ou swipe no mobile</span>
               </div>
 
               <div className="flex items-center gap-3 pt-2">
