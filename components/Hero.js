@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -13,6 +13,7 @@ const highlights = [
 const trustPoints = ['Pagamento seguro', 'Atendimento omnichannel', 'Implantação rápida'];
 
 const Hero = () => {
+  const shouldReduceMotion = useReducedMotion();
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -40,18 +41,18 @@ const Hero = () => {
     >
       <div className="absolute inset-0 opacity-70">
         <motion.div
-          animate={{ x: [0, 18, 0], y: [0, -24, 0] }}
-          transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+          animate={shouldReduceMotion ? undefined : { x: [0, 18, 0], y: [0, -24, 0] }}
+          transition={shouldReduceMotion ? undefined : { duration: 12, repeat: Infinity, ease: 'easeInOut' }}
           className="absolute -top-10 left-0 h-72 w-72 rounded-full bg-brand-teal/20 blur-3xl"
         />
         <motion.div
-          animate={{ x: [0, -26, 0], y: [0, 24, 0] }}
-          transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
+          animate={shouldReduceMotion ? undefined : { x: [0, -26, 0], y: [0, 24, 0] }}
+          transition={shouldReduceMotion ? undefined : { duration: 14, repeat: Infinity, ease: 'easeInOut' }}
           className="absolute right-0 top-1/4 h-80 w-80 rounded-full bg-cyan-400/10 blur-3xl"
         />
         <motion.div
-          animate={{ scale: [1, 1.08, 1] }}
-          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+          animate={shouldReduceMotion ? undefined : { scale: [1, 1.08, 1] }}
+          transition={shouldReduceMotion ? undefined : { duration: 10, repeat: Infinity, ease: 'easeInOut' }}
           className="absolute bottom-0 left-1/3 h-64 w-64 rounded-full bg-white/5 blur-3xl"
         />
       </div>
@@ -117,16 +118,25 @@ const Hero = () => {
 
           <motion.div variants={itemVariants} className="mt-10 flex flex-col gap-4 sm:flex-row">
             <Link
-              href="#segmentos"
+              href="/para-empresas"
               className="btn-primary premium-button text-center text-base shadow-[0_16px_45px_rgba(0,209,193,0.28)]"
             >
-              Ver segmentos visuais
+              Sou estabelecimento
             </Link>
             <Link
-              href="#dashboard-visual"
+              href="/para-clientes"
               className="btn-secondary premium-button text-center text-base"
             >
-              Explorar dashboard
+              Sou cliente
+            </Link>
+          </motion.div>
+
+          <motion.div variants={itemVariants} className="mt-4 flex flex-wrap items-center gap-4 text-sm text-slate-300">
+            <Link href="#segmentos" className="transition hover:text-brand-teal">
+              Ver segmentos visuais →
+            </Link>
+            <Link href="#dashboard-visual" className="transition hover:text-brand-teal">
+              Explorar dashboard →
             </Link>
           </motion.div>
 
@@ -151,8 +161,8 @@ const Hero = () => {
           className="relative flex min-h-[460px] items-center justify-center lg:min-h-[620px]"
         >
           <motion.div
-            animate={{ y: [0, -20, 0], rotate: [0, -2, 0, 2, 0] }}
-            transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+            animate={shouldReduceMotion ? undefined : { y: [0, -20, 0], rotate: [0, -2, 0, 2, 0] }}
+            transition={shouldReduceMotion ? undefined : { duration: 7, repeat: Infinity, ease: 'easeInOut' }}
             className="absolute inset-x-8 top-4 bottom-12 rounded-[2rem] bg-gradient-to-br from-brand-teal/15 via-transparent to-white/10 blur-2xl"
           />
 
@@ -163,8 +173,8 @@ const Hero = () => {
             <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(0,209,193,0.18),transparent_45%,rgba(255,255,255,0.06))]" />
             <div className="relative flex min-h-[500px] items-end justify-center">
               <motion.div
-                animate={{ y: [0, -26, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                animate={shouldReduceMotion ? undefined : { y: [0, -26, 0] }}
+                transition={shouldReduceMotion ? undefined : { duration: 5, repeat: Infinity, ease: 'easeInOut' }}
                 className="relative h-[420px] w-full max-w-md"
               >
                 <Image

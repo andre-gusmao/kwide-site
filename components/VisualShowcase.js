@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
 
 const mascotSlides = [
@@ -108,19 +109,37 @@ const dashboardHighlights = [
   'Jornada conectada entre pedido, pagamento e acompanhamento',
 ];
 
+const focusableSelectors = [
+  'a[href]',
+  'button:not([disabled])',
+  'textarea:not([disabled])',
+  'input:not([disabled])',
+  'select:not([disabled])',
+  '[tabindex]:not([tabindex="-1"])',
+].join(',');
+
 const VisualShowcase = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isCarouselPaused, setIsCarouselPaused] = useState(false);
+  const [isHoverPaused, setIsHoverPaused] = useState(false);
+  const [isFocusPaused, setIsFocusPaused] = useState(false);
   const [activeFilter, setActiveFilter] = useState('Todos');
   const [lightboxItem, setLightboxItem] = useState(null);
+  const closeButtonRef = useRef(null);
+  const dialogRef = useRef(null);
+  const lastFocusedElementRef = useRef(null);
+  const dialogTitleId = useId();
+  const dialogDescriptionId = useId();
+  const shouldReduceMotion = useReducedMotion();
+  const isCarouselPaused = shouldReduceMotion || isHoverPaused || isFocusPaused;
 
   useEffect(() => {
     if (isCarouselPaused) {
       return undefined;
     }
 
+    const totalSlides = mascotSlides.length;
     const interval = setInterval(() => {
-      setCurrentSlide((previous) => (previous + 1) % mascotSlides.length);
+      setCurrentSlide((previous) => (previous + 1) % totalSlides);
     }, 4200);
 
     return () => clearInterval(interval);
@@ -131,14 +150,60 @@ const VisualShowcase = () => {
       return undefined;
     }
 
+    const appRoot = document.getElementById('__next');
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    appRoot?.setAttribute('aria-hidden', 'true');
+    appRoot?.setAttribute('inert', '');
+    closeButtonRef.current?.focus();
+
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') {
+        event.preventDefault();
         setLightboxItem(null);
+        requestAnimationFrame(() => {
+          lastFocusedElementRef.current?.focus();
+        });
+        return;
+      }
+
+      if (event.key !== 'Tab') {
+        return;
+      }
+
+      const focusableElements = dialogRef.current?.querySelectorAll(focusableSelectors);
+      if (!focusableElements?.length) {
+        event.preventDefault();
+        return;
+      }
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+      const activeElement = document.activeElement;
+      const isFocusInsideDialog = dialogRef.current?.contains(activeElement);
+
+      if (!isFocusInsideDialog) {
+        event.preventDefault();
+        (event.shiftKey ? lastElement : firstElement).focus();
+        return;
+      }
+
+      if (event.shiftKey && activeElement === firstElement) {
+        event.preventDefault();
+        lastElement.focus();
+      } else if (!event.shiftKey && activeElement === lastElement) {
+        event.preventDefault();
+        firstElement.focus();
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+      appRoot?.removeAttribute('aria-hidden');
+      appRoot?.removeAttribute('inert');
+    };
   }, [lightboxItem]);
 
   const filteredGalleryItems = useMemo(() => {
@@ -151,6 +216,71 @@ const VisualShowcase = () => {
 
   const nextSlide = () => setCurrentSlide((previous) => (previous + 1) % mascotSlides.length);
   const previousSlide = () => setCurrentSlide((previous) => (previous - 1 + mascotSlides.length) % mascotSlides.length);
+
+  const openLightbox = (item, event) => {
+    lastFocusedElementRef.current = event.currentTarget;
+    setLightboxItem(item);
+  };
+
+  const closeLightbox = () => {
+    setLightboxItem(null);
+    requestAnimationFrame(() => {
+      lastFocusedElementRef.current?.focus();
+    });
+  };
+
+  const lightbox = lightboxItem ? (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-[80] flex items-center justify-center bg-slate-950/90 px-4 py-10 backdrop-blur-md"
+        onClick={closeLightbox}
+      >
+        <motion.div
+          ref={dialogRef}
+          initial={{ opacity: 0, scale: 0.92, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.96, y: 20 }}
+          transition={{ duration: 0.25 }}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby={dialogTitleId}
+          aria-describedby={dialogDescriptionId}
+          className="relative w-full max-w-5xl overflow-hidden rounded-[2rem] border border-white/10 bg-brand-navy shadow-[0_24px_80px_rgba(0,0,0,0.45)]"
+          onClick={(event) => event.stopPropagation()}
+        >
+          <button
+            ref={closeButtonRef}
+            type="button"
+            onClick={closeLightbox}
+            className="absolute right-4 top-4 z-10 rounded-full border border-white/10 bg-brand-navy/80 px-3 py-2 text-sm text-white backdrop-blur-sm transition hover:border-brand-teal hover:text-brand-teal focus-visible:border-brand-teal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal focus-visible:ring-offset-2 focus-visible:ring-offset-brand-navy"
+            aria-label="Fechar lightbox"
+          >
+            Fechar ✕
+          </button>
+          <div className="grid lg:grid-cols-[1.2fr_0.8fr]">
+            <div className="relative min-h-[340px] lg:min-h-[640px]">
+              <Image
+                src={lightboxItem.image}
+                alt={lightboxItem.title}
+                fill
+                sizes="100vw"
+                className="object-cover"
+                priority
+              />
+            </div>
+            <div className="flex flex-col justify-center p-8 sm:p-10">
+              <p className="text-sm uppercase tracking-[0.28em] text-brand-teal">{lightboxItem.category}</p>
+              <h3 id={dialogTitleId} className="mt-4 text-3xl font-semibold text-white">{lightboxItem.title}</h3>
+              <p id={dialogDescriptionId} className="mt-5 text-lg leading-relaxed text-slate-300">{lightboxItem.description}</p>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  ) : null;
 
   return (
     <>
@@ -171,14 +301,20 @@ const VisualShowcase = () => {
               <h2 className="mt-4 text-4xl font-bold text-white md:text-5xl">Contextos visuais que humanizam a plataforma</h2>
             </div>
             <p className="max-w-2xl text-lg text-slate-300">
-              Cada slide destaca uma aplicação da marca KWide com movimento suave, navegação controlada e pausa automática ao hover.
+              Cada slide destaca uma aplicação da marca KWide com movimento suave, navegação controlada e pausa automática durante a interação.
             </p>
           </motion.div>
 
           <div
             className="premium-surface relative overflow-hidden rounded-[2rem] border border-white/10 p-4 md:p-6"
-            onMouseEnter={() => setIsCarouselPaused(true)}
-            onMouseLeave={() => setIsCarouselPaused(false)}
+            onMouseEnter={() => setIsHoverPaused(true)}
+            onMouseLeave={() => setIsHoverPaused(false)}
+            onFocusCapture={() => setIsFocusPaused(true)}
+            onBlurCapture={(event) => {
+              if (!event.currentTarget.contains(event.relatedTarget)) {
+                setIsFocusPaused(false);
+              }
+            }}
           >
             <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
               <div className="space-y-6 p-2 md:p-4">
@@ -189,6 +325,8 @@ const VisualShowcase = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -18 }}
                     transition={{ duration: 0.35 }}
+                    aria-live="polite"
+                    aria-atomic="true"
                   >
                     <p className="text-sm uppercase tracking-[0.28em] text-brand-teal">Slide {String(currentSlide + 1).padStart(2, '0')}</p>
                     <h3 className="mt-4 text-3xl font-semibold text-white">{mascotSlides[currentSlide].title}</h3>
@@ -244,8 +382,8 @@ const VisualShowcase = () => {
                   >
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.16),_transparent_42%)]" />
                     <motion.div
-                      animate={{ y: [0, -12, 0] }}
-                      transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                      animate={shouldReduceMotion ? undefined : { y: [0, -12, 0] }}
+                      transition={shouldReduceMotion ? undefined : { duration: 5, repeat: Infinity, ease: 'easeInOut' }}
                       className="relative h-full w-full"
                     >
                       <Image
@@ -310,8 +448,9 @@ const VisualShowcase = () => {
                 viewport={{ once: true, margin: '-80px' }}
                 transition={{ duration: 0.5, delay: index * 0.04 }}
                 whileHover={{ y: -8, scale: 1.01 }}
-                onClick={() => setLightboxItem(item)}
-                className="group premium-surface text-left overflow-hidden rounded-[1.75rem] border border-white/10"
+                onClick={(event) => openLightbox(item, event)}
+                aria-haspopup="dialog"
+                className="group premium-surface overflow-hidden rounded-[1.75rem] border border-white/10 text-left"
               >
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <motion.div whileHover={{ scale: 1.05, rotate: 0.6 }} transition={{ duration: 0.4 }} className="h-full w-full">
@@ -410,52 +549,7 @@ const VisualShowcase = () => {
         </div>
       </section>
 
-      <AnimatePresence>
-        {lightboxItem && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[80] flex items-center justify-center bg-slate-950/90 px-4 py-10 backdrop-blur-md"
-            onClick={() => setLightboxItem(null)}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.92, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.96, y: 20 }}
-              transition={{ duration: 0.25 }}
-              className="relative w-full max-w-5xl overflow-hidden rounded-[2rem] border border-white/10 bg-brand-navy shadow-[0_24px_80px_rgba(0,0,0,0.45)]"
-              onClick={(event) => event.stopPropagation()}
-            >
-              <button
-                type="button"
-                onClick={() => setLightboxItem(null)}
-                className="absolute right-4 top-4 z-10 rounded-full border border-white/10 bg-brand-navy/80 px-3 py-2 text-sm text-white backdrop-blur-sm transition hover:border-brand-teal hover:text-brand-teal"
-                aria-label="Fechar lightbox"
-              >
-                Fechar ✕
-              </button>
-              <div className="grid lg:grid-cols-[1.2fr_0.8fr]">
-                <div className="relative min-h-[340px] lg:min-h-[640px]">
-                  <Image
-                    src={lightboxItem.image}
-                    alt={lightboxItem.title}
-                    fill
-                    sizes="100vw"
-                    className="object-cover"
-                    priority
-                  />
-                </div>
-                <div className="flex flex-col justify-center p-8 sm:p-10">
-                  <p className="text-sm uppercase tracking-[0.28em] text-brand-teal">{lightboxItem.category}</p>
-                  <h3 className="mt-4 text-3xl font-semibold text-white">{lightboxItem.title}</h3>
-                  <p className="mt-5 text-lg leading-relaxed text-slate-300">{lightboxItem.description}</p>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {typeof window !== 'undefined' ? createPortal(lightbox, document.body) : null}
     </>
   );
 };
