@@ -1,6 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Link from 'next/link';
+import Image from 'next/image';
 
 const Hero = () => {
   const containerVariants = {
@@ -27,8 +29,16 @@ const Hero = () => {
     <section id="hero" className="hero-gradient relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Background Elements */}
       <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-brand-teal rounded-full mix-blend-multiply filter blur-3xl"></div>
-        <div className="absolute bottom-20 right-10 w-72 h-72 bg-brand-teal rounded-full mix-blend-multiply filter blur-3xl animation-delay-2000"></div>
+        <motion.div
+          animate={{ y: [0, -20, 0] }}
+          transition={{ duration: 8, repeat: Infinity }}
+          className="absolute top-20 left-10 w-72 h-72 bg-brand-teal rounded-full mix-blend-multiply filter blur-3xl"
+        ></motion.div>
+        <motion.div
+          animate={{ y: [0, 20, 0] }}
+          transition={{ duration: 10, repeat: Infinity, delay: 2 }}
+          className="absolute bottom-20 right-10 w-72 h-72 bg-brand-teal rounded-full mix-blend-multiply filter blur-3xl"
+        ></motion.div>
       </div>
 
       <motion.div
@@ -55,38 +65,48 @@ const Hero = () => {
             </motion.p>
 
             <motion.div className="space-y-4 mb-8" variants={itemVariants}>
-              <p className="text-gray-400 flex items-center">
-                <span className="text-brand-teal mr-3">✓</span> Sem filas
+              <p className="text-gray-400 flex items-center hover:text-brand-teal transition">
+                <span className="text-brand-teal mr-3 text-xl">✓</span> Sem filas
               </p>
-              <p className="text-gray-400 flex items-center">
-                <span className="text-brand-teal mr-3">✓</span> Sem calotes
+              <p className="text-gray-400 flex items-center hover:text-brand-teal transition">
+                <span className="text-brand-teal mr-3 text-xl">✓</span> Sem calotes
               </p>
-              <p className="text-gray-400 flex items-center">
-                <span className="text-brand-teal mr-3">✓</span> Sem intermediários
+              <p className="text-gray-400 flex items-center hover:text-brand-teal transition">
+                <span className="text-brand-teal mr-3 text-xl">✓</span> Sem intermediários
               </p>
             </motion.div>
 
             <motion.div className="flex flex-col sm:flex-row gap-4" variants={itemVariants}>
-              <a href="/para-empresas" className="btn-primary text-center">
+              <Link href="/para-empresas" className="btn-primary text-center hover:shadow-lg hover:shadow-brand-teal transition">
                 Sou Estabelecimento
-              </a>
-              <a href="/para-clientes" className="btn-secondary text-center">
+              </Link>
+              <Link href="/para-clientes" className="btn-secondary text-center hover:shadow-lg hover:shadow-brand-teal transition">
                 Sou Cliente
-              </a>
+              </Link>
             </motion.div>
           </motion.div>
 
           {/* Right Content - Mascot */}
           <motion.div
-            className="relative h-96 md:h-full"
+            className="relative h-96 md:h-full flex items-center justify-center"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-brand-teal to-transparent opacity-10 rounded-full blur-3xl"></div>
-            <div className="w-full h-full bg-gradient-to-b from-brand-teal to-brand-navy rounded-full flex items-center justify-center text-center">
-              <p className="text-white text-2xl font-bold">🎭 CUYDE</p>
-            </div>
+            <motion.div
+              animate={{ y: [0, -30, 0] }}
+              transition={{ duration: 4, repeat: Infinity }}
+              className="relative w-full h-full max-w-md"
+            >
+              <div className="absolute inset-0 bg-gradient-to-b from-brand-teal to-transparent opacity-20 rounded-full blur-3xl"></div>
+              <Image
+                src="/images/mascot/CUYDE.png"
+                alt="CUYDE Mascote"
+                fill
+                className="object-contain drop-shadow-2xl"
+                priority
+              />
+            </motion.div>
           </motion.div>
         </div>
       </motion.div>

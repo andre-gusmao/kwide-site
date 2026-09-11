@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { motion } from 'framer-motion';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import Image from 'next/image';
 
 export default function ParaClientes() {
   const benefits = [
@@ -85,8 +86,16 @@ export default function ParaClientes() {
         {/* Hero Section */}
         <section className="hero-gradient relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
           <div className="absolute inset-0 opacity-20">
-            <div className="absolute top-20 left-10 w-72 h-72 bg-brand-teal rounded-full mix-blend-multiply filter blur-3xl"></div>
-            <div className="absolute bottom-20 right-10 w-72 h-72 bg-brand-teal rounded-full mix-blend-multiply filter blur-3xl"></div>
+            <motion.div
+              animate={{ y: [0, -20, 0] }}
+              transition={{ duration: 8, repeat: Infinity }}
+              className="absolute top-20 left-10 w-72 h-72 bg-brand-teal rounded-full mix-blend-multiply filter blur-3xl"
+            ></motion.div>
+            <motion.div
+              animate={{ y: [0, 20, 0] }}
+              transition={{ duration: 10, repeat: Infinity, delay: 2 }}
+              className="absolute bottom-20 right-10 w-72 h-72 bg-brand-teal rounded-full mix-blend-multiply filter blur-3xl"
+            ></motion.div>
           </div>
 
           <motion.div
@@ -102,14 +111,47 @@ export default function ParaClientes() {
               Escaneie o QR Code, escolha seus itens favoritos e pague de forma segura
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="btn-primary text-lg px-8 py-4">Baixar App</button>
-              <button className="btn-secondary text-lg px-8 py-4">Saiba Mais</button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="btn-primary text-lg px-8 py-4 hover:shadow-lg hover:shadow-brand-teal"
+              >
+                Baixar App
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="btn-secondary text-lg px-8 py-4 hover:shadow-lg hover:shadow-brand-teal"
+              >
+                Saiba Mais
+              </motion.button>
             </div>
           </motion.div>
         </section>
 
-        {/* Benefits Section */}
+        {/* Restaurant Scene */}
         <section className="section-padding bg-gray-900">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="relative h-96 md:h-full rounded-xl overflow-hidden shadow-2xl border border-brand-teal border-opacity-30"
+            >
+              <Image
+                src="/images/scenarios/Cenário.png"
+                alt="Cenário Restaurante"
+                fill
+                className="object-cover hover:scale-110 transition-transform duration-500"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Benefits Section */}
+        <section className="section-padding bg-brand-navy">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: -20 }}
@@ -129,10 +171,12 @@ export default function ParaClientes() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  whileHover={{ y: -10 }}
-                  className="bg-gray-800 p-8 rounded-lg border border-gray-700 hover:border-brand-teal transition-all"
+                  whileHover={{ y: -15, boxShadow: '0 30px 50px rgba(0, 209, 193, 0.15)' }}
+                  className="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-lg border border-gray-700 hover:border-brand-teal transition-all"
                 >
-                  <div className="text-5xl mb-4">{benefit.icon}</div>
+                  <div className="text-5xl mb-4 animate-bounce" style={{ animationDelay: `${index * 0.1}s` }}>
+                    {benefit.icon}
+                  </div>
                   <h3 className="text-2xl font-bold text-white mb-3">{benefit.title}</h3>
                   <p className="text-gray-400">{benefit.description}</p>
                 </motion.div>
@@ -142,7 +186,7 @@ export default function ParaClientes() {
         </section>
 
         {/* How to Use Section */}
-        <section className="section-padding bg-brand-navy">
+        <section className="section-padding bg-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: -20 }}
@@ -162,9 +206,16 @@ export default function ParaClientes() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="bg-gray-800 p-8 rounded-lg border border-gray-700"
+                  whileHover={{ y: -10, boxShadow: '0 30px 50px rgba(0, 209, 193, 0.15)' }}
+                  className="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-lg border border-gray-700 hover:border-brand-teal transition-all"
                 >
-                  <div className="text-6xl font-bold text-brand-teal mb-4 opacity-20">{item.step}</div>
+                  <motion.div
+                    className="text-6xl font-bold text-brand-teal mb-4 opacity-30"
+                    animate={{ rotate: [0, 10, 0] }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                  >
+                    {item.step}
+                  </motion.div>
                   <h3 className="text-2xl font-bold text-white mb-3 -mt-8">{item.title}</h3>
                   <p className="text-gray-400">{item.description}</p>
                 </motion.div>

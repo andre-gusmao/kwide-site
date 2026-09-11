@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const HowItWorks = () => {
   const steps = [
@@ -60,20 +61,36 @@ const HowItWorks = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ y: -10 }}
+              whileHover={{ y: -15, boxShadow: '0 30px 50px rgba(0, 209, 193, 0.15)' }}
               className="relative"
             >
-              <div className="bg-gray-800 p-8 rounded-lg border border-gray-700 hover:border-brand-teal transition-all h-full">
-                <div className="text-5xl font-bold text-brand-teal opacity-20 mb-4">
+              <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-lg border border-gray-700 hover:border-brand-teal transition-all h-full">
+                <motion.div
+                  className="text-6xl font-bold text-brand-teal opacity-15 mb-4"
+                  animate={{ rotate: [0, 5, 0] }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                >
                   {step.number}
-                </div>
-                <h3 className="text-xl font-bold text-white mb-3">{step.title}</h3>
+                </motion.div>
+                <h3 className="text-xl font-bold text-white mb-3 -mt-4">{step.title}</h3>
                 <p className="text-gray-400">{step.description}</p>
                 {index < steps.length - 1 && (
                   <div className="hidden lg:block absolute -right-4 top-1/2 transform -translate-y-1/2">
-                    <svg className="w-8 h-8 text-brand-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
+                    <motion.svg
+                      className="w-8 h-8 text-brand-teal"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      animate={{ x: [0, 5, 0] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
+                    </motion.svg>
                   </div>
                 )}
               </div>

@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { motion } from 'framer-motion';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import Image from 'next/image';
 
 export default function ParaEmpresas() {
   const features = [
@@ -97,8 +98,16 @@ export default function ParaEmpresas() {
         {/* Hero Section */}
         <section className="hero-gradient relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
           <div className="absolute inset-0 opacity-20">
-            <div className="absolute top-20 left-10 w-72 h-72 bg-brand-teal rounded-full mix-blend-multiply filter blur-3xl"></div>
-            <div className="absolute bottom-20 right-10 w-72 h-72 bg-brand-teal rounded-full mix-blend-multiply filter blur-3xl"></div>
+            <motion.div
+              animate={{ y: [0, -20, 0] }}
+              transition={{ duration: 8, repeat: Infinity }}
+              className="absolute top-20 left-10 w-72 h-72 bg-brand-teal rounded-full mix-blend-multiply filter blur-3xl"
+            ></motion.div>
+            <motion.div
+              animate={{ y: [0, 20, 0] }}
+              transition={{ duration: 10, repeat: Infinity, delay: 2 }}
+              className="absolute bottom-20 right-10 w-72 h-72 bg-brand-teal rounded-full mix-blend-multiply filter blur-3xl"
+            ></motion.div>
           </div>
 
           <motion.div
@@ -114,14 +123,47 @@ export default function ParaEmpresas() {
               Solução completa para estabelecimentos de comida e bebida transformarem sua operação
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="btn-primary text-lg px-8 py-4">Começar Teste Gratuito</button>
-              <button className="btn-secondary text-lg px-8 py-4">Ver Demo</button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="btn-primary text-lg px-8 py-4 hover:shadow-lg hover:shadow-brand-teal"
+              >
+                Começar Teste Gratuito
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="btn-secondary text-lg px-8 py-4 hover:shadow-lg hover:shadow-brand-teal"
+              >
+                Ver Demo
+              </motion.button>
             </div>
           </motion.div>
         </section>
 
-        {/* Features Section */}
+        {/* Dashboard Scene */}
         <section className="section-padding bg-gray-900">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="relative h-96 md:h-full rounded-xl overflow-hidden shadow-2xl border border-brand-teal border-opacity-30"
+            >
+              <Image
+                src="/images/scenarios/Dashboard.png"
+                alt="Dashboard KWide"
+                fill
+                className="object-cover hover:scale-105 transition-transform duration-500"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Features Section */}
+        <section className="section-padding bg-brand-navy">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: -20 }}
@@ -141,10 +183,12 @@ export default function ParaEmpresas() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  whileHover={{ y: -10 }}
-                  className="bg-gray-800 p-8 rounded-lg border border-gray-700 hover:border-brand-teal transition-all"
+                  whileHover={{ y: -15, boxShadow: '0 30px 50px rgba(0, 209, 193, 0.15)' }}
+                  className="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-lg border border-gray-700 hover:border-brand-teal transition-all"
                 >
-                  <div className="text-5xl mb-4">{feature.icon}</div>
+                  <div className="text-5xl mb-4 animate-bounce" style={{ animationDelay: `${index * 0.1}s` }}>
+                    {feature.icon}
+                  </div>
                   <h3 className="text-2xl font-bold text-white mb-3">{feature.title}</h3>
                   <p className="text-gray-400">{feature.description}</p>
                 </motion.div>
@@ -154,7 +198,7 @@ export default function ParaEmpresas() {
         </section>
 
         {/* Pricing Section */}
-        <section className="section-padding bg-brand-navy">
+        <section className="section-padding bg-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: -20 }}
@@ -174,19 +218,20 @@ export default function ParaEmpresas() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
+                  whileHover={{ y: -20, boxShadow: '0 40px 60px rgba(0, 209, 193, 0.2)' }}
                   className={`rounded-lg p-8 transition-all ${
                     plan.highlighted
-                      ? 'bg-brand-teal text-brand-navy ring-2 ring-brand-teal'
-                      : 'bg-gray-800 border border-gray-700 text-white'
+                      ? 'bg-gradient-to-br from-brand-teal to-cyan-600 text-brand-navy ring-2 ring-brand-teal scale-105'
+                      : 'bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 text-white'
                   }`}
                 >
                   <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
-                  <p className={`mb-6 ${ plan.highlighted ? 'text-brand-navy opacity-80' : 'text-gray-400'}`}>
+                  <p className={`mb-6 ${ plan.highlighted ? 'text-brand-navy opacity-90' : 'text-gray-400'}`}>
                     {plan.description}
                   </p>
                   <div className="mb-6">
                     <span className="text-5xl font-bold">{plan.price}</span>
-                    <span className={plan.highlighted ? 'text-brand-navy opacity-80' : 'text-gray-400'}>{plan.period}</span>
+                    <span className={plan.highlighted ? 'text-brand-navy opacity-90' : 'text-gray-400'}>{plan.period}</span>
                   </div>
                   <ul className="space-y-3 mb-8">
                     {plan.features.map((feature, idx) => (
@@ -196,13 +241,17 @@ export default function ParaEmpresas() {
                       </li>
                     ))}
                   </ul>
-                  <button className={`w-full py-3 rounded-lg font-bold transition-all ${
-                    plan.highlighted
-                      ? 'bg-brand-navy text-brand-teal hover:opacity-90'
-                      : 'bg-brand-teal text-brand-navy hover:opacity-90'
-                  }`}>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`w-full py-3 rounded-lg font-bold transition-all ${
+                      plan.highlighted
+                        ? 'bg-brand-navy text-brand-teal hover:opacity-90 shadow-lg'
+                        : 'bg-brand-teal text-brand-navy hover:opacity-90'
+                    }`}
+                  >
                     {plan.cta}
-                  </button>
+                  </motion.button>
                 </motion.div>
               ))}
             </div>

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,7 +17,6 @@ const Header = () => {
     { name: 'Para Clientes', href: '/para-clientes' },
     { name: 'Segmentos', href: '#segmentos' },
     { name: 'Como Funciona', href: '#como-funciona' },
-    { name: 'Aplicativo', href: '#aplicativo' },
     { name: 'Contato', href: '#contato' },
   ];
 
@@ -35,12 +35,22 @@ const Header = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-brand-teal rounded-full flex items-center justify-center font-bold text-brand-navy">
-              K
-            </div>
-            <span className="font-bold text-xl text-white">KWide</span>
+          {/* Logo com animação */}
+          <Link href="/" className="flex items-center space-x-3">
+            <motion.div
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              whileTap={{ scale: 0.95 }}
+              className="relative w-12 h-12"
+            >
+              <Image
+                src="/images/logo/Logotipo_KWide_principal.png"
+                alt="KWide Logo"
+                fill
+                className="object-contain"
+                priority
+              />
+            </motion.div>
+            <span className="font-bold text-xl text-white hidden sm:inline">KWide</span>
           </Link>
 
           {/* Desktop Menu */}
@@ -49,9 +59,10 @@ const Header = () => {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-gray-300 hover:text-brand-teal transition-colors duration-300"
+                className="text-gray-300 hover:text-brand-teal transition-colors duration-300 relative group"
               >
                 {item.name}
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-teal group-hover:w-full transition-all duration-300"></span>
               </Link>
             ))}
           </nav>
@@ -62,7 +73,7 @@ const Header = () => {
             <select
               value={language}
               onChange={(e) => setLanguage(e.target.value)}
-              className="hidden md:block bg-brand-navy text-white border border-brand-teal rounded px-3 py-2 text-sm"
+              className="hidden md:block bg-brand-navy text-white border border-brand-teal rounded px-3 py-2 text-sm hover:bg-opacity-80 transition"
             >
               {languages.map((lang) => (
                 <option key={lang.code} value={lang.code}>
@@ -72,17 +83,25 @@ const Header = () => {
             </select>
 
             {/* CTA Buttons */}
-            <button className="hidden md:block btn-secondary text-sm">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="hidden md:block btn-secondary text-sm"
+            >
               Cadastrar
-            </button>
-            <button className="hidden md:block btn-primary text-sm">
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="hidden md:block btn-primary text-sm"
+            >
               Entrar
-            </button>
+            </motion.button>
 
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden p-2"
+              className="lg:hidden p-2 hover:bg-gray-800 rounded transition"
             >
               <svg
                 className="w-6 h-6"
@@ -112,7 +131,7 @@ const Header = () => {
               <Link
                 key={item.name}
                 href={item.href}
-                className="block text-gray-300 hover:text-brand-teal py-2"
+                className="block text-gray-300 hover:text-brand-teal py-2 px-2 rounded hover:bg-gray-800 transition"
               >
                 {item.name}
               </Link>
