@@ -99,9 +99,12 @@ const MascotCarousel = () => {
           transition={{ duration: 0.7 }}
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
+          onFocus={() => setIsPaused(true)}
+          onBlur={() => setIsPaused(false)}
           onTouchStart={(event) => setTouchStart(event.touches[0].clientX)}
           onTouchEnd={(event) => {
             if (touchStart === null) {
+              setTouchStart(null);
               return;
             }
 

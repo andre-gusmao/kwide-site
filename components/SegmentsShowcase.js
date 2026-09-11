@@ -102,7 +102,7 @@ const SegmentsShowcase = () => {
                 >
                   <Image
                     src={imageSrc(segment.image)}
-                    alt={`Visual KWide para ${segment.name}`}
+                    alt={segment.isBrandCard ? 'Logotipo principal da KWide' : `Visual KWide para ${segment.name}`}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                     className={`object-cover transition-transform duration-700 ${segment.isBrandCard ? 'bg-white/90 object-contain p-8' : ''}`}
