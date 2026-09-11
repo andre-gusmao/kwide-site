@@ -14,7 +14,8 @@ import About from '@/components/About';
 import Footer from '@/components/Footer';
 
 export default function Home() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+  const siteUrl = configuredSiteUrl && !configuredSiteUrl.includes('localhost') ? configuredSiteUrl : null;
 
   return (
     <>
@@ -34,7 +35,7 @@ export default function Home() {
           content="Conheça a plataforma KWide com experiência premium para atendimento, pedidos, pagamentos e visão operacional."
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={siteUrl} />
+        {siteUrl ? <meta property="og:url" content={siteUrl} /> : null}
       </Head>
 
       <div className="min-h-screen bg-brand-navy text-white">

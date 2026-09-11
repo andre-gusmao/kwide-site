@@ -58,6 +58,10 @@ const MascotCarousel = () => {
   };
 
   const goToSlide = (index) => {
+    if (index === activeIndex) {
+      return;
+    }
+
     setDirection(index > activeIndex ? 1 : -1);
     setActiveIndex(index);
   };
@@ -114,6 +118,7 @@ const MascotCarousel = () => {
           tabIndex={0}
           role="region"
           aria-label="Carousel interativo dos mascotes da KWide"
+          aria-describedby="mascot-carousel-help"
           onTouchEnd={(event) => {
             if (touchStart === null) {
               setTouchStart(null);
@@ -198,10 +203,12 @@ const MascotCarousel = () => {
                   onClick={() => setIsAutoPlayEnabled((current) => !current)}
                   className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white transition hover:border-brand-teal hover:text-brand-teal"
                   aria-label={isAutoPlayEnabled ? 'Pausar rotação automática' : 'Retomar rotação automática'}
+                  aria-describedby="mascot-carousel-help"
+                  aria-pressed={!isAutoPlayEnabled}
                 >
                   {isAutoPlayEnabled ? 'Pausar autoplay' : 'Retomar autoplay'}
                 </button>
-                <span className="text-sm text-slate-400">Auto-play a cada 4s · pause com botão, hover, foco ou swipe no mobile</span>
+                <span id="mascot-carousel-help" className="text-sm text-slate-400">Auto-play a cada 4s · pause com botão, hover, foco ou swipe no mobile</span>
               </div>
 
               <div className="flex items-center gap-3 pt-2">
