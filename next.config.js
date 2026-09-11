@@ -3,6 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     unoptimized: true,
+    formats: ['image/webp'],
   },
   i18n: {
     locales: ['pt-BR', 'en', 'es'],

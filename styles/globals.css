@@ -22,7 +22,9 @@ body {
 
 /* Hero Section */
 .hero-gradient {
-  background: linear-gradient(135deg, #0B2341 0%, #1a3a52 100%);
+  background:
+    radial-gradient(circle at top, rgba(0, 209, 193, 0.18), transparent 28%),
+    linear-gradient(135deg, #07182d 0%, #0b2341 48%, #12395c 100%);
 }
 
 .hero-parallax {
@@ -56,9 +58,19 @@ body {
   @apply px-6 py-3 bg-white text-brand-navy font-bold rounded-lg hover:opacity-90 transition-all duration-300;
 }
 
+.premium-button {
+  @apply rounded-2xl px-7 py-4;
+}
+
 /* Card Styles */
 .card-hover {
   @apply transition-all duration-300 hover:shadow-lg hover:scale-105;
+}
+
+.premium-surface {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(11, 35, 65, 0.55));
+  box-shadow: 0 18px 40px rgba(3, 10, 25, 0.28);
+  backdrop-filter: blur(18px);
 }
 
 /* Animations */

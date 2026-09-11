@@ -1,7 +1,6 @@
 'use client';
 
 import Head from 'next/head';
-import { motion } from 'framer-motion';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import ProblemsSection from '@/components/ProblemsSection';
@@ -9,6 +8,7 @@ import HowItWorks from '@/components/HowItWorks';
 import Benefits from '@/components/Benefits';
 import Segments from '@/components/Segments';
 import Testimonials from '@/components/Testimonials';
+import VisualShowcase from '@/components/VisualShowcase';
 import About from '@/components/About';
 import Footer from '@/components/Footer';
 
@@ -31,6 +31,7 @@ export default function Home() {
         <HowItWorks />
         <Benefits />
         <Segments />
+        <VisualShowcase />
         <Testimonials />
         <About />
         <Footer />
