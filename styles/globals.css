@@ -74,3 +74,10 @@ body {
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
+
+
+.hero-premium-background {
+  background: radial-gradient(circle at top left, rgba(0, 209, 193, 0.16), transparent 32%),
+    radial-gradient(circle at top right, rgba(56, 189, 248, 0.14), transparent 28%),
+    linear-gradient(135deg, #071426 0%, #0B2341 45%, #12345b 100%);
+}
