@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
+import { assetPath } from '@/utils/assetPath';
 
 const Hero = () => {
   const containerVariants = {
@@ -100,7 +101,7 @@ const Hero = () => {
             >
               <div className="absolute inset-0 bg-gradient-to-b from-brand-teal to-transparent opacity-20 rounded-full blur-3xl"></div>
               <Image
-                src="/images/mascot/CUYDE.png"
+                src={assetPath('/images/mascot/Mascote CUYDE KWide 2.png')}
                 alt="CUYDE Mascote"
                 fill
                 className="object-contain drop-shadow-2xl"
