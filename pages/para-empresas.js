@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Image from 'next/image';
+import { assetPath } from '@/utils/assetPath';
 
 export default function ParaEmpresas() {
   const features = [
@@ -151,7 +152,7 @@ export default function ParaEmpresas() {
               className="relative h-96 md:h-full rounded-xl overflow-hidden shadow-2xl border border-brand-teal border-opacity-30"
             >
               <Image
-                src="/images/scenarios/Dashboard.png"
+                src={assetPath('scenarios/Mascote_CUYDE_KWide_Dashboard.png')}
                 alt="Dashboard KWide"
                 fill
                 className="object-cover hover:scale-105 transition-transform duration-500"
