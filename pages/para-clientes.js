@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Image from 'next/image';
+import { assetPath } from '@/utils/assetPath';
 
 export default function ParaClientes() {
   const benefits = [
@@ -139,7 +140,7 @@ export default function ParaClientes() {
               className="relative h-96 md:h-full rounded-xl overflow-hidden shadow-2xl border border-brand-teal border-opacity-30"
             >
               <Image
-                src="/images/scenarios/Cenário.png"
+                src={assetPath('/images/scenarios/Mascote CUYDE KWide restaurante.png')}
                 alt="Cenário Restaurante"
                 fill
                 className="object-cover hover:scale-110 transition-transform duration-500"

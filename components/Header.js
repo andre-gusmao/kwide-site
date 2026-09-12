@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { assetPath } from '@/utils/assetPath';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,7 +44,7 @@ const Header = () => {
               className="relative w-12 h-12"
             >
               <Image
-                src="/images/logo/Logotipo_KWide_principal.png"
+                src={assetPath('/images/logo/Logotipo_KWide_principal.png')}
                 alt="KWide Logo"
                 fill
                 className="object-contain"
