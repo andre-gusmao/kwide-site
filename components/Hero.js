@@ -104,7 +104,7 @@ const Hero = () => {
                 src={assetPath('mascot/Mascote_CUYDE_KWide_2.png')}
                 alt="CUYDE Mascote"
                 fill
-                className="object-contain drop-shadow-2xl mix-blend-multiply brightness-125 contrast-125 saturate-125"
+                className="object-contain drop-shadow-2xl brightness-110 contrast-110 saturate-110"
                 priority
               />
             </motion.div>
