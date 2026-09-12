@@ -12,12 +12,12 @@ const Header = () => {
   const router = useRouter();
 
   const menuItems = [
-    { name: 'Início', href: '#hero' },
+    { name: 'Início', href: '/#hero' },
     { name: 'Para Empresas', href: '/para-empresas' },
     { name: 'Para Clientes', href: '/para-clientes' },
-    { name: 'Segmentos', href: '#segmentos' },
-    { name: 'Como Funciona', href: '#como-funciona' },
-    { name: 'Contato', href: '#contato' },
+    { name: 'Segmentos', href: '/segmentos' },
+    { name: 'Como Funciona', href: '/como-funciona' },
+    { name: 'Contato', href: '/#contato' },
   ];
 
   const languages = [
