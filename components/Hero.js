@@ -97,16 +97,18 @@ const Hero = () => {
             <motion.div
               animate={{ y: [0, -30, 0] }}
               transition={{ duration: 4, repeat: Infinity }}
-              className="relative w-full h-full max-w-md"
+              className="relative w-full max-w-md aspect-square drop-shadow-2xl"
             >
               <div className="absolute inset-0 bg-gradient-to-b from-brand-teal to-transparent opacity-20 rounded-full blur-3xl"></div>
-              <Image
-                src={assetPath('mascot/Mascote_CUYDE_KWide_2.png')}
-                alt="CUYDE Mascote"
-                fill
-                className="object-contain drop-shadow-2xl"
-                priority
-              />
+              <div className="relative w-full h-full mascot-mask">
+                <Image
+                  src={assetPath('mascot/Mascote_CUYDE_KWide_2.png')}
+                  alt="CUYDE Mascote"
+                  fill
+                  className="object-contain mascot-mask-image"
+                  priority
+                />
+              </div>
             </motion.div>
           </motion.div>
         </div>
