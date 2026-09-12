@@ -2,22 +2,20 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [language, setLanguage] = useState('pt-BR');
-  const router = useRouter();
 
   const menuItems = [
-    { name: 'Início', href: '#hero' },
+    { name: 'Início', href: { pathname: '/', hash: 'hero' } },
     { name: 'Para Empresas', href: '/para-empresas' },
     { name: 'Para Clientes', href: '/para-clientes' },
-    { name: 'Segmentos', href: '#segmentos' },
-    { name: 'Como Funciona', href: '#como-funciona' },
-    { name: 'Contato', href: '#contato' },
+    { name: 'Segmentos', href: '/segmentos' },
+    { name: 'Como Funciona', href: '/como-funciona' },
+    { name: 'Contato', href: { pathname: '/', hash: 'contato' } },
   ];
 
   const languages = [
