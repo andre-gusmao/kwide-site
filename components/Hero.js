@@ -97,14 +97,15 @@ const Hero = () => {
             <motion.div
               animate={{ y: [0, -30, 0] }}
               transition={{ duration: 4, repeat: Infinity }}
-              className="relative w-full h-full max-w-md"
+              className="relative w-full h-full max-w-md isolate"
             >
               <div className="absolute inset-0 bg-gradient-to-b from-brand-teal to-transparent opacity-20 rounded-full blur-3xl"></div>
               <Image
                 src={assetPath('mascot/Mascote_CUYDE_KWide_2.png')}
                 alt="CUYDE Mascote"
                 fill
-                className="object-contain drop-shadow-2xl"
+                className="object-contain drop-shadow-2xl [mix-blend-mode:multiply] brightness-110 contrast-125 saturate-110"
+                style={{ backgroundColor: 'transparent' }}
                 priority
               />
             </motion.div>
