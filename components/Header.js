@@ -10,14 +10,15 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [language, setLanguage] = useState('pt-BR');
   const router = useRouter();
+  const homeAnchor = (hash) => (router.pathname === '/' ? hash : `/${hash}`);
 
   const menuItems = [
-    { name: 'Início', href: '/#hero' },
+    { name: 'Início', href: homeAnchor('#hero') },
     { name: 'Para Empresas', href: '/para-empresas' },
     { name: 'Para Clientes', href: '/para-clientes' },
     { name: 'Segmentos', href: '/segmentos' },
     { name: 'Como Funciona', href: '/como-funciona' },
-    { name: 'Contato', href: '/#contato' },
+    { name: 'Contato', href: homeAnchor('#contato') },
   ];
 
   const languages = [

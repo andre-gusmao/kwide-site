@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { assetPath } from '@/utils/assetPath';
 
 const Segments = () => {
   const scenarioFiles = [
@@ -53,7 +52,7 @@ const Segments = () => {
             >
               <div className="relative h-48 w-full mb-4 rounded-md overflow-hidden bg-gray-900">
                 <Image
-                  src={assetPath(`scenarios/${segment.fileName}`)}
+                  src={`/images/scenarios/${segment.fileName}`}
                   alt={segment.label}
                   fill
                   className="object-cover"
