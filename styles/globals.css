@@ -25,6 +25,19 @@ body {
   background: linear-gradient(135deg, #0B2341 0%, #1a3a52 100%);
 }
 
+@supports (((mask-image: radial-gradient(circle at center, black 70%, transparent 95%)) or (-webkit-mask-image: radial-gradient(circle at center, black 70%, transparent 95%))) and (clip-path: inset(2% 10% 6% 2%))) {
+  .mascot-mask {
+    overflow: hidden;
+    clip-path: inset(2% 10% 6% 2%);
+    mask-image: radial-gradient(circle at center, black 70%, transparent 95%);
+    -webkit-mask-image: radial-gradient(circle at center, black 70%, transparent 95%);
+  }
+
+  .mascot-mask-image {
+    transform: scale(1.05);
+  }
+}
+
 .hero-parallax {
   position: relative;
   overflow: hidden;
