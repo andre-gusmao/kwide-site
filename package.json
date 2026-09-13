@@ -1,7 +1,7 @@
 {
   "name": "kwide-site",
   "version": "1.0.0",
-  "description": "Website institucional, comercial e de marketing de alta conversão para a plataforma KWide",
+  "description": "Website institucional, comercial e de marketing de alta convers\u00e3o para a plataforma KWide",
   "private": true,
   "scripts": {
     "dev": "next dev",
